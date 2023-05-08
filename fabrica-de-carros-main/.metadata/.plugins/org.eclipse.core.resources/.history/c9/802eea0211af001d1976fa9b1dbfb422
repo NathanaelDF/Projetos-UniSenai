@@ -1,0 +1,47 @@
+package controladora;
+
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import carro.*;
+import fabrica.fabrica;
+
+public class controladora {
+
+	public void exibeMenu() {
+		carro carro = new carro();
+		fabrica fabrica = new fabrica();
+		int opcao = 0;
+		do {
+			opcao = fabrica.solicitaOpcao();
+			switch (opcao) {
+			case 0:
+				int QtdeCarros = Integer
+						.parseInt(JOptionPane.showInputDialog("Informe o número de carros que deseja fabricar"));
+				for (int i = 0; i < QtdeCarros; i++) {
+					carro.setCor(carro.SolicitaCor());
+					carro.setModelo(carro.SolicitaModelo());
+					fabrica.fabricarCarro();
+				}
+				break;
+			case 1:
+				carro.setCor(carro.SolicitaCor());
+				carro.setModelo(carro.SolicitaModelo());
+				break;
+			case 2:
+				fabrica = null;
+				
+				ArrayList<carro> listaDeCarrosRe = new ArrayList<carro>();
+				listaDeCarrosRe = carro.getListaDeCarros() ;
+				
+				int tamanhoArray = listaDeCarros.size();
+				for (int i = 0; i < tamanhoArray; i++) {
+					listaDeCarros.get(i);
+				}
+				break;
+			
+			}
+		} while (opcao != 3);
+		
+	}
+}

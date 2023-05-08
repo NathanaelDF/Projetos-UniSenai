@@ -1,0 +1,64 @@
+package fabrica;
+
+import java.util.ArrayList;
+
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+import carro.*;
+
+public class fabrica {
+
+	ArrayList<carro> listaDeCarros = new ArrayList<carro>();
+
+	public ArrayList<carro> getListaDeCarros() {
+		return listaDeCarros;
+	}
+
+	public void setArrayListaDeCarros(ArrayList<carro> listaDeCarros) {
+		this.listaDeCarros = listaDeCarros;
+	}
+
+	public void fabricarCarro() {
+		carro carroFab = new carro();
+		carroFab.setCor(carro.solicitaCor());
+		carroFab.setModelo(carro.solicitaModelo());
+		listaDeCarros.add(carroFab);
+	}
+
+	public void venderCarro(String cor, String modelo) {
+
+		for (int i = 0; i < listaDeCarros.size(); i++) {
+			carro c = listaDeCarros.get(i);
+			if ((c.getModelo().equals(modelo)) && (c.getCor().equals(cor))) {
+				System.out.println("Vero");
+				listaDeCarros.remove(c);
+			} else {
+
+			}
+
+		}
+	}
+
+	public void lerArray() {
+		carro carro = new carro();
+		for (int i = 0; i <= listaDeCarros.size(); i++) {
+			carro = listaDeCarros.get(i);
+		}
+		JOptionPane.showMessageDialog(null, carro);
+	}
+
+	public static int numRep() {
+		int QtdeCarros = Integer
+				.parseInt(JOptionPane.showInputDialog("Informe o número de carros que deseja"));
+		return QtdeCarros;
+	}
+
+	public static int solicitaOpcao() {
+		String[] opcoes = { "Fabricar carros", "Vender um carro", "Ver informações dos carros", "Sair" };
+		JComboBox<String> menu = new JComboBox<String>(opcoes);
+		JOptionPane.showConfirmDialog(null, menu, "Selecione a opção desejada", JOptionPane.OK_CANCEL_OPTION);
+		return menu.getSelectedIndex();
+	}
+
+}

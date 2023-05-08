@@ -1,0 +1,54 @@
+package fabrica;
+
+import java.util.ArrayList;
+
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+import carro.*;
+
+public class fabrica {
+
+	ArrayList<carro> listaDeCarros = new ArrayList<carro>();
+
+	public static ArrayList<carro> getListaDeCarros() {
+		return listaDeCarros;
+	}
+
+	public void setArrayListaDeCarros() {
+		this.listaDeCarros = listaDeCarros;
+	}
+
+	carro carro = new carro();
+
+	public void fabricarCarro() {
+		carro.getCor();
+		carro.getModelo();
+		listaDeCarros.add(carro);
+	}
+
+	public void venderCarro() {
+		carro = null;
+		carro.getCor();
+		carro.getModelo();
+		for (int i = 0; i < listaDeCarros.size() + 1; i++) {
+			if (carro == listaDeCarros.get(i)) {
+				// fazer verificação se é esse caro msm
+				listaDeCarros.remove(i);
+			}
+		}
+
+	}
+
+	public static int solicitaOpcao() {
+		String[] opcoes = { "Fabricar carros", "Vender um carro", "Ver informações dos carros", "Sair" };
+		JComboBox<String> menu = new JComboBox<String>(opcoes);
+		JOptionPane.showConfirmDialog(null, menu, "Selecione a opção desejada", JOptionPane.OK_CANCEL_OPTION);
+		return menu.getSelectedIndex();
+	}
+
+	public static void lerArray() {
+
+	}
+
+}

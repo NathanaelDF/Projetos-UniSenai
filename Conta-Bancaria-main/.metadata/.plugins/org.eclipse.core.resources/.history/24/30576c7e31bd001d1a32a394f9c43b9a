@@ -1,0 +1,54 @@
+package EntradaSaida;
+
+public class Movimentacao {
+
+	private String saque;
+
+	private String deposito;
+
+	private String valor;
+	
+	private String data;
+
+	private String conta;
+
+	public String getSaque() {
+		return saque;
+	}
+
+	public void setSaque(String saque) {
+		this.saque = saque;
+	}
+
+	public String getDeposito() {
+		return deposito;
+	}
+
+	public void setDeposito(String deposito) {
+		this.deposito = deposito;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
+	public String getConta() {
+		return conta;
+	}
+
+	public void setConta(String conta) {
+		this.conta = conta;
+	}
+}

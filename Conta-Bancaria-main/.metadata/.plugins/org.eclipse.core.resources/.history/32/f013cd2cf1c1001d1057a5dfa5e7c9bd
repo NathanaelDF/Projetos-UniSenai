@@ -1,0 +1,198 @@
+package EntradaSaida;
+
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+public class Conta {
+
+	private int saldoContaPop;
+
+	private int saldoContaCore;
+
+	private int saldo;
+
+	private ArrayList<Movimentacao> listaDeMovimentacao = new ArrayList<Movimentacao>();
+
+	public ArrayList<Movimentacao> getListaDeMovimentacao() {
+		return listaDeMovimentacao;
+	}
+
+	public void setListaDeMovimentacao(ArrayList<Movimentacao> listaDeMovimentacao) {
+		this.listaDeMovimentacao = listaDeMovimentacao;
+	}
+
+	public int getSaldoContaPop() {
+		return saldoContaPop;
+	}
+
+	public void setSaldoContaPop(int saldoContaPop) {
+		this.saldoContaPop = saldoContaPop;
+	}
+
+	public int getSaldoContaCore() {
+		return saldoContaCore;
+	}
+
+	public void setSaldoContaCore(int saldoContaCore) {
+		this.saldoContaCore = saldoContaCore;
+	}
+
+	public int getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(int saldo) {
+		this.saldo = saldo;
+	}
+
+	public void depositar(int qualConta) {
+		Movimentacao movi = new Movimentacao();
+		movi.setTipoMovi(0);
+		int somaSaldo = 0;
+		int deposito = 0;
+		String data = null;
+		switch (qualConta) {
+		case 1:// poupança
+			data = JOptionPane.showInputDialog(null,"Informe a data de deposito");
+			deposito = Integer.parseInt(JOptionPane.showInputDialog(null, "Qual o valor do depósito ?"));
+			movi.setDeposito(deposito);
+			movi.setData(data);
+			listaDeMovimentacao.add(movi);
+			somaSaldo = getSaldoContaPop();
+			somaSaldo = deposito + somaSaldo;
+			setSaldoContaPop(somaSaldo);
+			break;
+		case 2:// corrente
+			data = JOptionPane.showInputDialog(null,"Informe a data de deposito");
+			deposito = Integer.parseInt(JOptionPane.showInputDialog(null, "Qual o valor do depósito ?"));
+			movi.setDeposito(deposito);
+			movi.setData(data);	
+			listaDeMovimentacao.add(movi);
+			somaSaldo = getSaldoContaCore();
+			somaSaldo += somaSaldo;
+			setSaldoContaCore(somaSaldo);
+			break;
+		}
+	}
+
+	public void sacar(int qualConta) {
+		Movimentacao movi = new Movimentacao();
+		movi.setTipoMovi(1);
+		int saque = 0;
+		int menosSaldo = 0;
+		String data = null;
+		switch (qualConta) {
+		case 1:// poupança
+			data = JOptionPane.showInputDialog(null,"Informe a data de saque");
+			saque = Integer.parseInt(JOptionPane.showInputDialog(null, "Quanto deseja sacar ?"));
+			movi.setSaque(saque);
+			movi.setData(data);			
+			listaDeMovimentacao.add(movi);
+			menosSaldo = getSaldoContaPop();
+			menosSaldo = menosSaldo - saque;
+			setSaldoContaPop(menosSaldo);
+			break;
+		case 2:// corrente
+			data = JOptionPane.showInputDialog(null,"Informe a data de saque");
+			saque = Integer.parseInt(JOptionPane.showInputDialog(null, "Quanto deseja sacar ?"));
+			movi.setSaque(saque);
+			movi.setData(data);
+			listaDeMovimentacao.add(movi);
+			menosSaldo = getSaldoContaCore();
+			menosSaldo = menosSaldo - saque;
+			setSaldoContaCore(menosSaldo);
+			break;
+		}
+
+	}
+
+	public int gerarSaldo(int qualConta) {
+		int saldo = 0;
+		switch (qualConta) {
+		case 1:// poupanca
+			saldo = getSaldoContaPop();
+			break;
+		case 2:// corrente
+			saldo = getSaldoContaCore();
+			break;
+		}
+		return saldo;
+	}
+	public void gerarDadosDaConta() {
+	String nome = JOptionPane.showInputDialog(null,"Digite o nome do titular da conta");
+	movi.setNomeTitular(nome);
+	String cpf =  JOptionPane.showInputDialog(null,"Digite o cpf do titular da conta");
+	movi.setCpfTitular(cpf);
+	}
+
+	public String gerarExtrato() {
+		String tipoConta = null;
+		if (movi.getConta() == 0) {
+			tipoConta = "Poupança";
+		}else if(movi.getConta() == 1) {
+			tipoConta = "Corrente";
+		}
+		String extrato = "Nome: "+movi.getNomeTitular()+"CPF: "+movi.getCpfTitular()+"\nConta: "+tipoConta;
+		String tipoMovi = null;
+		for (int i = 0; i < listaDeMovimentacao.size(); i++) {
+			Movimentacao m = listaDeMovimentacao.get(i);
+			extrato += "\nData: "+ m.getData();
+			if (m.getTipoMovi() == 0) {
+				tipoMovi = "Deposito: "+m.getDeposito()+"\n";
+			}else if(m.getTipoMovi() == 1) {
+				tipoMovi = "Saque: "+m.getSaque()+"\n";
+			}			
+			extrato += tipoMovi;
+		}
+		return extrato;
+	}
+
+	public String gerarExtratoDepositos() {
+		String extrato = null;
+		for (int i = 0; i < listaDeMovimentacao.size(); i++) {
+			Movimentacao m = listaDeMovimentacao.get(i);
+			extrato ="Deposito: ";
+			extrato += m.getDeposito();
+		}
+		return extrato;
+	}
+
+	public String gerarExtratoSaques() {
+		String extrato = null;
+		for (int i = 0; i < listaDeMovimentacao.size(); i++) {
+			Movimentacao m = listaDeMovimentacao.get(i);
+			extrato +="Saque: ";
+			extrato += m.getSaque();
+		}
+		return extrato;
+	}
+
+
+	public int opcaoes() {
+		String[] opcoes = { "Saldo", "Saque", "Deposito", "Extratos", "Informações da Conta","Sair do Programa" };
+		JComboBox<String> menuPrincipal = new JComboBox<String>(opcoes);
+		JOptionPane.showConfirmDialog(null, menuPrincipal, "Informe o que deseja fazer", JOptionPane.OK_CANCEL_OPTION);
+		return menuPrincipal.getSelectedIndex();
+	}
+
+	public int opcoesExtratos() {
+		String[] opcoes = { "Extrato de Saques", "Extratos de Depositos", "Extrato Completo ", "Sair desse menu" };
+		JComboBox<String> menuExtrato = new JComboBox<String>(opcoes);
+		JOptionPane.showConfirmDialog(null, menuExtrato, "Selecione o tipo de extrato que deseja",
+				JOptionPane.OK_CANCEL_OPTION);
+		return menuExtrato.getSelectedIndex();
+	}
+
+	public int qualConta() {
+		int qualConta = Integer
+				.parseInt(JOptionPane.showInputDialog(null, "Qual conta deseja acessar \n1- Poupança\n2-Corrente"));
+		if (qualConta == 1) {
+			movi.setConta(0);
+		}else {
+			movi.setConta(1);
+		}
+		return qualConta;
+	}
+
+}

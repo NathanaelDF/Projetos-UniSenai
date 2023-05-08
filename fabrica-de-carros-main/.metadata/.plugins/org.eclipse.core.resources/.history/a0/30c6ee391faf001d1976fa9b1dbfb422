@@ -1,0 +1,37 @@
+package carro;
+
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+public class carro {
+	  private int cor;
+	  private int modelo;
+	  
+	  public int getCor() {
+		  return cor;
+	  }
+	  public void setCor(int cor) {
+		  this.cor = cor;
+	  }
+	  public int getModelo() {
+		  return modelo;
+	  }
+	public void setModelo(int modelo) {
+		this.modelo = modelo;
+	}
+
+	public static int SolicitaCor() {
+		String[] cores = {"PRETO","BRANCO","CINZA","MARROM","VERMELO","PEROLA","AZUL","VERDE ÁGUA",};
+		JComboBox<String> cor = new JComboBox<String>(cores);
+		JOptionPane.showConfirmDialog(null,cor, "Selocione a cor desejada para seu carro", JOptionPane.OK_CANCEL_OPTION);
+		return cor.getSelectedIndex();
+	}
+	public static int SolicitaModelo() {
+		String[] modelos = {"SUV","SEDÃ","PICAPE","VAN","CONVERSIVEL"};	
+		JComboBox<String> modelo = new JComboBox<String>(modelos);
+		JOptionPane.showConfirmDialog(null, modelo, "Selocione o modelo desejado do seu carro", JOptionPane.OK_CANCEL_OPTION);		
+		return modelo.getSelectedIndex();
+	}
+
+
+}
